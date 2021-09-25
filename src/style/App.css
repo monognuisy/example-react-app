@@ -6,8 +6,9 @@
 }
 
 .timer {
-  width:100;
+  width: 100;
   align-items: center;
+  justify-content: center;
 }
 
 .timer-text-box {
@@ -17,9 +18,20 @@
 
 .timer-button-box {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   /* width: 100px; */
   margin-inline-start: 1vw;
   margin-inline-end: 1vw;
   margin-bottom: 2vh;
+}
+
+.timer-input {
+  width: 20rem;
+}
+
+.timer-button,
+.timer-input {
+  font-size: 1.5rem;
+  padding: 1rem;
+  margin: 0.5rem;
 }
