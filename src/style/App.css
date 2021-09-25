@@ -7,9 +7,19 @@
 
 .timer {
   width:100;
+  align-items: center;
 }
 
 .timer-text-box {
   display: flex;
   justify-content: center;
+}
+
+.timer-button-box {
+  display: flex;
+  justify-content: space-around;
+  /* width: 100px; */
+  margin-inline-start: 1vw;
+  margin-inline-end: 1vw;
+  margin-bottom: 2vh;
 }
