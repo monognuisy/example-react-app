@@ -16,7 +16,7 @@ const Timer = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputTime: number = parseInt(e.target.value, 10);
+    const inputTime: number = Math.abs(parseInt(e.target.value, 10));
 
     if (Number.isNaN(inputTime)) {
       setSecond(0);
@@ -25,25 +25,51 @@ const Timer = () => {
     }
   };
 
+  /* eslint no-bitwise: ["error", { "allow": ["~"] }] */
+  const formatTime = (sec: number):string => {
+    const hourVal = ~~(sec / 3600);
+    const minuteVal = ~~((sec % 3600) / 60);
+    const secondVal = sec % 60;
+
+    let resultString = (hourVal ? `${hourVal.toString()}h ` : '')
+    + (minuteVal ? `${minuteVal.toString()}m ` : '');
+
+    if (secondVal === 0 && (hourVal || minuteVal)) {
+      resultString += '';
+    } else {
+      resultString += secondVal.toString();
+    }
+
+    return resultString;
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (second > 0) {
         setSecond((s) => s - 1);
       }
     }, 1000);
-    return (() => clearInterval(interval));
+    return () => clearInterval(interval);
   }, [second]);
 
   return (
     <div className="timer">
       <div className="timer-text-box">
-        <h1>{second}</h1>
+        <h1>{formatTime(second)}</h1>
       </div>
       <div className="timer-button-box">
-        <button type="button" onClick={onIncrease}>+10</button>
-        <button type="button" onClick={onDecrease}>-10</button>
+        <input
+          placeholder="Write down Time(second)"
+          onChange={handleChange}
+          className="timer-input"
+        />
+        <button type="button" onClick={onIncrease} className="timer-button">
+          + 10
+        </button>
+        <button type="button" onClick={onDecrease} className="timer-button">
+          - 10
+        </button>
       </div>
-      <input placeholder="Write down Time(second)" onChange={handleChange} />
     </div>
   );
 };
