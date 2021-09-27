@@ -6,32 +6,53 @@
 }
 
 .timer {
-  width: 100;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 30vmax;
 }
 
 .timer-text-box {
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .timer-button-box {
   display: flex;
   justify-content: center;
-  /* width: 100px; */
-  margin-inline-start: 1vw;
-  margin-inline-end: 1vw;
-  margin-bottom: 2vh;
+  width: 100%;
+  margin-bottom: 1vmax;
 }
 
-.timer-input {
-  width: 20rem;
+.timer-pause-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .timer-button,
+.timer-input,
+.timer-pause {
+  font-size: 1vmax;
+  padding: 1vmax;
+  margin: 0.5vmax;
+  width: 5vmax;
+  margin-bottom: 0;
+}
+
 .timer-input {
-  font-size: 1.5rem;
-  padding: 1rem;
-  margin: 0.5rem;
+  width: 15vmax;
+}
+
+.timer-pause {
+  margin: 0;
+  background-color: #07c900;
+  border-style: none;
+  width: 30vmax;
+  margin-left: 0.5vmax;
+  margin-right: 0.5vmax;
 }
