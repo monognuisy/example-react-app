@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 const Timer = () => {
-  const pauseBtnStyle = { backgroundColor: '#07c900' };
-  const resumeBtnStyle = { backgroundColor: '#fac61c' };
+  const pauseTrue = {
+    isPaused: true,
+    str: 'Resume!',
+    btnStyle: {
+      backgroundColor: '#fac61c',
+    },
+  };
+  const pauseFalse = {
+    isPaused: false,
+    str: 'Pause!',
+    btnStyle: {
+      backgroundColor: '#07c900',
+    },
+  };
 
   const [second, setSecond] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [strIsPaused, setStrIsPaused] = useState('Pause!');
-  const [btnStyle, setBtnStyle] = useState(pauseBtnStyle);
+  const [pauseObj, setPauseObj] = useState(pauseFalse);
 
   const onIncrease = () => {
     setSecond((n) => n + 10);
@@ -22,16 +32,10 @@ const Timer = () => {
   };
 
   const togglePause = () => {
-    const prevIsPaused = isPaused;
-
-    if (prevIsPaused) {
-      setIsPaused(false);
-      setStrIsPaused('Pause!');
-      setBtnStyle(pauseBtnStyle);
+    if (pauseObj.isPaused) {
+      setPauseObj(pauseFalse);
     } else {
-      setIsPaused(true);
-      setStrIsPaused('Resume!');
-      setBtnStyle(resumeBtnStyle);
+      setPauseObj(pauseTrue);
     }
   };
 
@@ -65,14 +69,14 @@ const Timer = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isPaused) {
+      if (!pauseObj.isPaused) {
         if (second > 0) {
           setSecond((s) => s - 1);
         }
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [second, isPaused]);
+  }, [second, pauseObj]);
 
   return (
     <div className="timer">
@@ -93,8 +97,13 @@ const Timer = () => {
         </button>
       </div>
       <div className="timer-pause-box">
-        <button type="button" onClick={togglePause} className="timer-pause" style={btnStyle}>
-          {strIsPaused}
+        <button
+          type="button"
+          onClick={togglePause}
+          className="timer-pause"
+          style={pauseObj.btnStyle}
+        >
+          {[pauseObj.str]}
         </button>
       </div>
     </div>
