@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 const Timer = () => {
+  const pauseBtnStyle = { backgroundColor: '#07c900' };
+  const resumeBtnStyle = { backgroundColor: '#fac61c' };
+
   const [second, setSecond] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [strIsPaused, setStrIsPaused] = useState('Pause!');
+  const [btnStyle, setBtnStyle] = useState(pauseBtnStyle);
 
   const onIncrease = () => {
     setSecond((n) => n + 10);
@@ -12,6 +18,20 @@ const Timer = () => {
       setSecond(0);
     } else {
       setSecond((n) => n - 10);
+    }
+  };
+
+  const togglePause = () => {
+    const prevIsPaused = isPaused;
+
+    if (prevIsPaused) {
+      setIsPaused(false);
+      setStrIsPaused('Pause!');
+      setBtnStyle(pauseBtnStyle);
+    } else {
+      setIsPaused(true);
+      setStrIsPaused('Resume!');
+      setBtnStyle(resumeBtnStyle);
     }
   };
 
@@ -45,12 +65,14 @@ const Timer = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (second > 0) {
-        setSecond((s) => s - 1);
+      if (!isPaused) {
+        if (second > 0) {
+          setSecond((s) => s - 1);
+        }
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [second]);
+  }, [second, isPaused]);
 
   return (
     <div className="timer">
@@ -68,6 +90,11 @@ const Timer = () => {
         </button>
         <button type="button" onClick={onDecrease} className="timer-button">
           - 10
+        </button>
+      </div>
+      <div className="timer-pause-box">
+        <button type="button" onClick={togglePause} className="timer-pause" style={btnStyle}>
+          {strIsPaused}
         </button>
       </div>
     </div>
