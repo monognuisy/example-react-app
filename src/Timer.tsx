@@ -98,11 +98,14 @@ const Timer = () => {
           onChange={handleChange}
           className="timer-input"
         />
-        <button type="button" onClick={onIncrease} className="timer-button">
-          + 10
+        <button type="button" onClick={onIncrease} className="button timer-increase">
+          +
         </button>
-        <button type="button" onClick={onDecrease} className="timer-button">
-          - 10
+        <button type="button" onClick={onDecrease} className="button timer-decrease">
+          -
+        </button>
+        <button type="button" onClick={onDecrease} className="button bookmark-button">
+          🌟
         </button>
       </div>
       <div className="timer-pause-box">
