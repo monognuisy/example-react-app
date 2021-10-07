@@ -17,7 +17,7 @@ const Timer = () => {
   };
 
   const [second, setSecond] = useState(0);
-  const [pauseObj, setPauseObj] = useState(pauseFalse);
+  const [pauseObj, setPauseObj] = useState(pauseTrue);
 
   const onIncrease = () => {
     setSecond((n) => n + 10);
@@ -47,6 +47,9 @@ const Timer = () => {
     } else {
       setSecond(inputTime);
     }
+
+    // 새로운 시간을 입력하면 pause
+    setPauseObj(pauseTrue);
   };
 
   /* eslint no-bitwise: ["error", { "allow": ["~"] }] */
@@ -68,6 +71,12 @@ const Timer = () => {
   };
 
   useEffect(() => {
+    // 시간이 0이면 자동적으로 pause
+    if (second === 0) {
+      setPauseObj(pauseTrue);
+    }
+
+    // countdown
     const interval = setInterval(() => {
       if (!pauseObj.isPaused) {
         if (second > 0) {
