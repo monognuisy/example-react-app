@@ -23,12 +23,12 @@ const TimerContainer = ({
       sec,
       id,
     };
-    setDoc(docRef, payload);
+    await setDoc(docRef, payload);
   };
 
   const deleteTimer = async () => {
     const docRef = doc(db, 'timers', id);
-    deleteDoc(docRef);
+    await deleteDoc(docRef);
   };
 
   const loadTimer = () => {

@@ -9,7 +9,6 @@ import {
   deleteDoc,
   onSnapshot,
 } from 'firebase/firestore';
-// import { firebaseConfig } from './.env';
 
 export const firebaseConfig = {
 

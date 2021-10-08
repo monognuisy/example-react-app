@@ -49,7 +49,7 @@ const Timer = () => {
         nickname: generateRandomString(10),
         sec: second,
       };
-      addDoc(collectionRef, payload);
+      await addDoc(collectionRef, payload);
     } else {
       // eslint-disable-next-line
       alert('0 second. Seriously?');
