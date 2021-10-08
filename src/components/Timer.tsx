@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { DocumentData } from 'firebase/firestore';
-import { db, collection, onSnapshot } from './firebase';
-import formatTime from './functions';
+import { addDoc, DocumentData } from 'firebase/firestore';
+import { db, collection, onSnapshot } from '../firebase';
+import formatTime from '../utils/functions';
 import TimerContainer from './TimerContainer';
-// import TimerContainer from './TimerContainer';
+import generateRandomString from '../utils/randomString';
+
+type TimerContainerPropsNoId = {
+  nickname: string,
+  sec: number,
+};
 
 const Timer = () => {
   const pauseTrue = {
@@ -23,14 +28,8 @@ const Timer = () => {
 
   const [second, setSecond] = useState(0);
   const [pauseObj, setPauseObj] = useState(pauseTrue);
-  const [timerNum, setTimerNum] = useState(0);
+  // const [timerNum, setTimerNum] = useState(0);
   const [timerStarred, setTimerStarred] = useState<DocumentData[]>([]);
-
-  // const timerStarred: Array<DocumentData> = [];
-  // const container: Array<ReactElement> = [];
-
-  // const tempContainer = [<TimerContainer nickname="hello" sec={60} />];
-  // tempContainer.push(<TimerContainer nickname="dude" sec={30} />);
 
   const onIncrease = () => {
     setSecond((n) => n + 10);
@@ -44,8 +43,14 @@ const Timer = () => {
     }
   };
 
-  const bookmark = () => {
-    setTimerNum(timerNum + 1);
+  const bookmark = async () => {
+    const collectionRef = collection(db, 'timers');
+    const payload: TimerContainerPropsNoId = {
+      nickname: generateRandomString(10),
+      sec: second,
+    };
+    addDoc(collectionRef, payload);
+    // setTimerNum(timerNum + 1);
   };
 
   const togglePause = () => {
@@ -88,8 +93,9 @@ const Timer = () => {
 
   useEffect(() => {
     onSnapshot(collection(db, 'timers'), (snapshot) => {
-      setTimerStarred(snapshot.docs.map((doc) => doc.data()));
+      setTimerStarred(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+    // setTimerNum(timerStarred.length);
   }, []);
 
   return (
@@ -131,7 +137,7 @@ const Timer = () => {
       </div>
       <div className="right-box">
         {timerStarred.map((item) => (
-          <TimerContainer nickname={item.nickname} sec={item.sec} />
+          <TimerContainer nickname={item.nickname} sec={item.sec} id={item.id} />
         ))}
       </div>
     </div>
