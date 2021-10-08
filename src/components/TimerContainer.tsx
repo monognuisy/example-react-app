@@ -7,12 +7,16 @@ type TimerContainerProps = {
   nickname: string,
   sec: number,
   id: string
+  setTime: Function,
+  setPause: Function,
 };
 
-const TimerContainer = ({ nickname, sec, id }: TimerContainerProps) => {
+const TimerContainer = ({
+  nickname, sec, id, setTime, setPause,
+}: TimerContainerProps) => {
   const [newName, setNewName] = useState('');
 
-  const rename = async () => {
+  const renameTimer = async () => {
     const docRef = doc(db, 'timers', id);
     const payload = {
       nickname: newName,
@@ -27,6 +31,17 @@ const TimerContainer = ({ nickname, sec, id }: TimerContainerProps) => {
     deleteDoc(docRef);
   };
 
+  const loadTimer = () => {
+    setTime(sec);
+    setPause({
+      isPaused: true,
+      str: 'Resume!',
+      btnStyle: {
+        backgroundColor: '#fac61c',
+      },
+    });
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewName(e.target.value);
   };
@@ -36,8 +51,9 @@ const TimerContainer = ({ nickname, sec, id }: TimerContainerProps) => {
       <h2>{nickname}</h2>
       <h3>{formatTime(sec)}</h3>
       <input placeholder="Change Name" onChange={handleChange} />
-      <button type="button" onClick={rename}>Rename</button>
-      <button type="button" onClick={deleteTimer}>delete</button>
+      <button type="button" onClick={renameTimer}>Rename</button>
+      <button type="button" onClick={loadTimer}>Load</button>
+      <button type="button" onClick={deleteTimer}>Delete</button>
     </div>
   );
 };

@@ -28,7 +28,6 @@ const Timer = () => {
 
   const [second, setSecond] = useState(0);
   const [pauseObj, setPauseObj] = useState(pauseTrue);
-  // const [timerNum, setTimerNum] = useState(0);
   const [timerStarred, setTimerStarred] = useState<DocumentData[]>([]);
 
   const onIncrease = () => {
@@ -44,20 +43,26 @@ const Timer = () => {
   };
 
   const bookmark = async () => {
-    const collectionRef = collection(db, 'timers');
-    const payload: TimerContainerPropsNoId = {
-      nickname: generateRandomString(10),
-      sec: second,
-    };
-    addDoc(collectionRef, payload);
-    // setTimerNum(timerNum + 1);
+    if (second) {
+      const collectionRef = collection(db, 'timers');
+      const payload: TimerContainerPropsNoId = {
+        nickname: generateRandomString(10),
+        sec: second,
+      };
+      addDoc(collectionRef, payload);
+    } else {
+      // eslint-disable-next-line
+      alert('0 second. Seriously?');
+    }
   };
 
   const togglePause = () => {
-    if (pauseObj.isPaused) {
-      setPauseObj(pauseFalse);
-    } else {
-      setPauseObj(pauseTrue);
+    if (second) {
+      if (pauseObj.isPaused) {
+        setPauseObj(pauseFalse);
+      } else {
+        setPauseObj(pauseTrue);
+      }
     }
   };
 
@@ -75,16 +80,13 @@ const Timer = () => {
   };
 
   useEffect(() => {
-    // 시간이 0이면 자동적으로 pause
-    if (second === 0) {
-      setPauseObj(pauseTrue);
-    }
-
     // countdown
     const interval = setInterval(() => {
-      if (!pauseObj.isPaused) {
-        if (second > 0) {
+      if (second) {
+        if (!pauseObj.isPaused) {
+          // if (second > 0) {
           setSecond((s) => s - 1);
+          // }
         }
       }
     }, 1000);
@@ -92,11 +94,18 @@ const Timer = () => {
   }, [second, pauseObj]);
 
   useEffect(() => {
-    onSnapshot(collection(db, 'timers'), (snapshot) => {
+    const unsub = onSnapshot(collection(db, 'timers'), (snapshot) => {
       setTimerStarred(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
-    // setTimerNum(timerStarred.length);
+    return unsub;
   }, []);
+
+  useEffect(() => {
+    // 시간이 0이면 자동적으로 pause
+    if (second === 0) {
+      setPauseObj(pauseTrue);
+    }
+  }, [second]);
 
   return (
     <div className="timer">
@@ -137,7 +146,14 @@ const Timer = () => {
       </div>
       <div className="right-box">
         {timerStarred.map((item) => (
-          <TimerContainer nickname={item.nickname} sec={item.sec} id={item.id} />
+          <TimerContainer
+            nickname={item.nickname}
+            sec={item.sec}
+            setTime={setSecond}
+            setPause={setPauseObj}
+            id={item.id}
+            key={item.id}
+          />
         ))}
       </div>
     </div>
