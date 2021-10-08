@@ -7,20 +7,16 @@ import {
   getDoc,
   addDoc,
   deleteDoc,
+  onSnapshot,
 } from 'firebase/firestore';
-import { firebaseConfig } from '../.env';
+import { firebaseConfig } from './.env';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // const analytics = getAnalytics(app);
 
-const firebase = {
-  db,
-  collection,
-  getDocs,
-  getDoc,
-  addDoc,
-  deleteDoc,
+export {
+  db, collection, getDocs, getDoc, addDoc, deleteDoc, onSnapshot,
 };
-export default firebase;
+// export default firebase;
