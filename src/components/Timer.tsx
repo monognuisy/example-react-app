@@ -130,7 +130,7 @@ const Timer = () => {
             -
           </button>
           <button type="button" onClick={bookmark} className="button bookmark-button">
-            🌟
+            !
           </button>
         </div>
         <div className="timer-pause-box">
