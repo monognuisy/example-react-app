@@ -11,8 +11,8 @@ const App = () => {
     user: User | null;
     isLoggedIn: boolean;
   }>({
-    token: null,
-    user: null,
+    token: JSON.parse(localStorage.getItem('token') ?? '{}') ?? null,
+    user: JSON.parse(localStorage.getItem('user') ?? '{}') ?? null,
     isLoggedIn: false,
   });
 
@@ -23,6 +23,10 @@ const App = () => {
       user,
       isLoggedIn: !!user,
     });
+
+    // localStorage에 'token'과 'user'를 키로 갖도록 token과 user 정보를 저장합니다.
+    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   return (
