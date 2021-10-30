@@ -1,5 +1,5 @@
 import type { User } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import './style/App.css';
@@ -13,7 +13,7 @@ const App = () => {
   }>({
     token: null,
     user: null,
-    isLoggedIn: !!user,
+    isLoggedIn: false,
   });
 
   // App state에 token과 user, login여부를 설정한다.
