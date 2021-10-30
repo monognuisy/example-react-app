@@ -105,7 +105,7 @@ const Timer = () => {
     if (second === 0) {
       setPauseObj(pauseTrue);
     }
-  }, [second]);
+  }, [second, pauseTrue]);
 
   return (
     <div className="timer">
