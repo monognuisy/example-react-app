@@ -13,7 +13,7 @@ const App = () => {
   }>({
     token: JSON.parse(localStorage.getItem('token') ?? '{}') ?? null,
     user: JSON.parse(localStorage.getItem('user') ?? '{}') ?? null,
-    isLoggedIn: false,
+    isLoggedIn: !!(JSON.parse(localStorage.getItem('user') ?? '{}') ?? null),
   });
 
   // App state에 token과 user, login여부를 설정한다.
