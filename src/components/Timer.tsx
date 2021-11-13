@@ -44,12 +44,13 @@ const Timer = () => {
 
   const bookmark = async () => {
     if (second) {
+      console.log('hello')
       const collectionRef = collection(db, 'timers');
       const payload: TimerContainerPropsNoId = {
         nickname: generateRandomString(10),
         sec: BigInt(second),
       };
-      // await addDoc(collectionRef, payload);
+      await addDoc(collectionRef, payload);
     } else {
       // eslint-disable-next-line
       alert('0 second. Seriously?');
