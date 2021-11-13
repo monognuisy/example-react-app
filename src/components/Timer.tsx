@@ -47,7 +47,7 @@ const Timer = () => {
       const collectionRef = collection(db, 'timers');
       const payload: TimerContainerPropsNoId = {
         nickname: generateRandomString(10),
-        sec: second,
+        sec: BigInt(second),
       };
       await addDoc(collectionRef, payload);
     } else {
