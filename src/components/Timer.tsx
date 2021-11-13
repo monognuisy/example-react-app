@@ -7,7 +7,7 @@ import generateRandomString from '../utils/randomString';
 
 type TimerContainerPropsNoId = {
   nickname: string,
-  sec: number,
+  sec: bigint,
 };
 
 const Timer = () => {
@@ -26,19 +26,19 @@ const Timer = () => {
     },
   };
 
-  const [second, setSecond] = useState(0);
+  const [second, setSecond] = useState(0n);
   const [pauseObj, setPauseObj] = useState(pauseTrue);
   const [timerStarred, setTimerStarred] = useState<DocumentData[]>([]);
 
   const onIncrease = () => {
-    setSecond((n) => n + 10);
+    setSecond((n) => n + 10n);
   };
 
   const onDecrease = () => {
     if (second < 10) {
-      setSecond(0);
+      setSecond(0n);
     } else {
-      setSecond((n) => n - 10);
+      setSecond((n) => n - 10n);
     }
   };
 
@@ -67,10 +67,10 @@ const Timer = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputTime: number = Math.abs(parseInt(e.target.value, 10));
+    const inputTime: bigint = BigInt(e.target.value);
 
-    if (Number.isNaN(inputTime)) {
-      setSecond(0);
+    if (Number.isNaN(Number(inputTime))) {
+      setSecond(0n);
     } else {
       setSecond(inputTime);
     }
@@ -85,7 +85,7 @@ const Timer = () => {
       if (second) {
         if (!pauseObj.isPaused) {
           // if (second > 0) {
-          setSecond((s) => s - 1);
+          setSecond((s) => s - 1n);
           // }
         }
       }
@@ -102,7 +102,7 @@ const Timer = () => {
 
   useEffect(() => {
     // 시간이 0이면 자동적으로 pause
-    if (second === 0) {
+    if (second === 0n) {
       setPauseObj(pauseTrue);
     }
   }, [second, pauseTrue]);

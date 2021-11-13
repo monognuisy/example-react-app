@@ -35,7 +35,7 @@ const App = () => {
         state.isLoggedIn
           ? (
             <div>
-              <Timer />
+              <Timer /> 
               <LogoutButton onLogout={() => setAuth({
                 token: null,
                 user: null,

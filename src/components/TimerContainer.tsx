@@ -5,7 +5,7 @@ import { db } from '../firebase';
 
 type TimerContainerProps = {
   nickname: string,
-  sec: number,
+  sec: bigint,
   id: string
   setTime: Function,
   setPause: Function,
