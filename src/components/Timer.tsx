@@ -31,14 +31,14 @@ const Timer = () => {
   const [timerStarred, setTimerStarred] = useState<DocumentData[]>([]);
 
   const onIncrease = () => {
-    setSecond((n) => n + 10n);
+    setSecond((n: bigint) => BigInt(n) + 10n);
   };
 
   const onDecrease = () => {
     if (second < 10) {
       setSecond(0n);
     } else {
-      setSecond((n) => n - 10n);
+      setSecond((n: bigint) => BigInt(n) - 10n);
     }
   };
 
@@ -85,7 +85,7 @@ const Timer = () => {
       if (second) {
         if (!pauseObj.isPaused) {
           // if (second > 0) {
-          setSecond((s) => s - 1n);
+          setSecond((s: bigint) => BigInt(s) - 1n);
           // }
         }
       }
