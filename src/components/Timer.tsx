@@ -45,14 +45,15 @@ const Timer = () => {
   const bookmark = async () => {
     if (second) {
       if (second > Number.MAX_SAFE_INTEGER) {
-        alert('TOO BIG!');
+        alert('TOO BIG to bookmark. You can only save under 2^53 - 1 seconds.');
+      } else {
+        const collectionRef = collection(db, 'timers');
+        const payload: TimerContainerPropsNoId = {
+          nickname: generateRandomString(10),
+          sec: Number(second),
+        };
+        await addDoc(collectionRef, payload);
       }
-      const collectionRef = collection(db, 'timers');
-      const payload: TimerContainerPropsNoId = {
-        nickname: generateRandomString(10),
-        sec: Number(second),
-      };
-      await addDoc(collectionRef, payload);
     } else {
       // eslint-disable-next-line
       alert('0 second. Seriously?');
