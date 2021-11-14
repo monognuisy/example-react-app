@@ -7,7 +7,7 @@ import generateRandomString from '../utils/randomString';
 
 type TimerContainerPropsNoId = {
   nickname: string,
-  sec: bigint,
+  sec: number,
 };
 
 const Timer = () => {
@@ -44,11 +44,13 @@ const Timer = () => {
 
   const bookmark = async () => {
     if (second) {
-      console.log('hello')
+      if (second > Number.MAX_SAFE_INTEGER) {
+        alert('TOO BIG!');
+      }
       const collectionRef = collection(db, 'timers');
       const payload: TimerContainerPropsNoId = {
         nickname: generateRandomString(10),
-        sec: BigInt(second),
+        sec: Number(second),
       };
       await addDoc(collectionRef, payload);
     } else {
